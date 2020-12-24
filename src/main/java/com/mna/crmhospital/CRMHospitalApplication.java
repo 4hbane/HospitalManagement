@@ -1,0 +1,91 @@
+package com.mna.crmhospital;
+
+import com.mna.crmhospital.entities.*;
+import com.mna.crmhospital.repositories.*;
+
+import com.mna.crmhospital.services.SUserServiceImplementation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Date;
+
+@SpringBootApplication
+public class CRMHospitalApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CRMHospitalApplication.class, args);
+    }
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Bean
+    CommandLineRunner start(AdminFolderRepository adminFolderRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository,
+                            StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository,
+                            SRoleRepository sRoleRepository, SUserServiceImplementation sUserServiceImplementation) {
+        return args -> {
+            // AdminFolders, MedicalFolders and Hospitalizations
+            adminFolderRepository.save(new AdminFolder(1L,"Manal","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256987","cnops", null));
+            adminFolderRepository.save(new AdminFolder(2L,"Majdouline","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256907","cnops", null));
+            adminFolderRepository.save(new AdminFolder(3L,"Abdou","Ahbane","Homme",new Date(),"aoulouz", 20000L,"marie","Ingenieur","0661363636","PL2504987","cnops",1L));
+            adminFolderRepository.save(new AdminFolder(4L,"Mounib","Elboujbaoui","Homme",new Date(),"ifni", 55000L,"Celibataire","Ingenieur","0661363636","PL256687","cnops",null));
+            MedicalFolder dos = medicalFolderRepository.save(new MedicalFolder(1L,"diabetique","positif au covid","vitamine C",false, 3L,null));
+            hospitalizationRepository.save(new Hospitalization(1L,"covid", new Date(), new Date(),"fievre",5L,"Mehdi","reanimation",dos));
+            medicalFolderRepository.save(new MedicalFolder(2L,"diabetique","positif au covid","vitamine C",false, 1L,null));
+
+
+            // Staff, Beds and Drugs
+            staffRepository.save(new Staff(null, "Abdellah", "Ahbane", "JD000001", "abdou@email.com", "0607080901", "Aoulouz", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Reanimation", StaffFunction.DOCTOR, new Date()));
+            staffRepository.save(new Staff(null, "Mounib", "Elboujbaoui", "JD000002", "mounib@email.com", "0605070101", "Sidi Ifni", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Urgences", StaffFunction.DOCTOR, new Date()));
+            staffRepository.save(new Staff(null, "Manal", "Outtaleb", "JD000003", "manal@email.com", "06070445522", "Ouerzazate", new Date(), Gender.FEMALE, StaffStatus.ACTIVE, "RH", StaffFunction.RH, new Date()));
+            staffRepository.save(new Staff(null, "Ghani", "Kadouri", "JD000004", "ghani@email.com", "0307080901", "Marrakesh", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Reanimation", StaffFunction.PHARMACIST, new Date()));
+            staffRepository.save(new Staff(null, "Amine", "Sedgui", "JD000005", "amine@email.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "RECEP", StaffFunction.RECEPTIONIST, new Date()));
+
+
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+
+            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE, new Date()));
+            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE, new Date()));
+            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE, new Date()));
+
+            // Users and Roles
+            sRoleRepository.save(new SRole(null, "CLIENT"));
+            sRoleRepository.save(new SRole(null, "OFFICER"));
+            sRoleRepository.save(new SRole(null, "ADMIN"));
+
+            sUserServiceImplementation.saveUser( "atlas@gmail.com", bCryptPasswordEncoder.encode("atlas"), "ADMIN" );
+            sUserServiceImplementation.saveUser( "manal@backend.com", bCryptPasswordEncoder.encode("manal"), "CLIENT" );
+            sUserServiceImplementation.saveUser( "amine@frontend.com", "amine", "OFFICER" );
+
+            sUserServiceImplementation.saveUser ( "ameur@gmail.com", "ameur", "ADMIN" );
+            sUserServiceImplementation.saveUser ( "wahman@backend.com", "wahman", "CLIENT" );
+            sUserServiceImplementation.saveUser ( "mounib@frontend.com", "mounib", "OFFICER" );
+
+            sUserServiceImplementation.saveUser ( "ahbane@backend.com", "ahbane", "CLIENT" );
+            sUserServiceImplementation.saveUser ( "ghani@frontend.com", "ghani", "OFFICER" );
+
+            sUserServiceImplementation.saveUser ( "lamia@gmail.com", "lamia", "CLIENT" );
+            sUserServiceImplementation.saveUser ( "salma@gmail.com", "salma", "OFFICER" );
+
+            sUserServiceImplementation.saveUser ( "mehdi@gmail.com", "mehdi", "CLIENT" );
+            sUserServiceImplementation.saveUser ( "ali@gmail.com", "ali", "OFFICER" );
+
+        };
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+}
