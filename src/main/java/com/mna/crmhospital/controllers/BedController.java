@@ -51,10 +51,12 @@ public class BedController {
     }
 
     @PutMapping("/lits/prix")
-    public void updateBedPrice(@RequestBody Bed bed) {
+    public Boolean updateBedPrice(@RequestBody Bed bed) {
         if( bed.getPricePerDay () != 0 & bed.getPricePerDay () != null ){
             bedRepository.updatePrice ( bed.getPricePerDay () );
+            return true;
         }
+        return false;
     }
 
     @DeleteMapping("/lits/{id}")
