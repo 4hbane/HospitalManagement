@@ -1,9 +1,11 @@
 package com.mna.crmhospital.controllers;
 
 import com.mna.crmhospital.entities.AdminFolder;
+import com.mna.crmhospital.entities.Drug;
 import com.mna.crmhospital.entities.Hospitalization;
 import com.mna.crmhospital.entities.MedicalFolder;
 import com.mna.crmhospital.repositories.AdminFolderRepository;
+import com.mna.crmhospital.repositories.DrugRepository;
 import com.mna.crmhospital.repositories.HospitalizationRepository;
 import com.mna.crmhospital.repositories.MedicalFolderRepository;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ public class MedicalFolderController {
     private final AdminFolderRepository adminFolderRepository;
     private final MedicalFolderRepository medicalFolderRepository;
     private final HospitalizationRepository hospitalizationRepository;
+    private final DrugRepository drugRepository;
 
     @GetMapping("/dossiersMedicaux")
     public List<MedicalFolder> getFolders() {
@@ -71,6 +74,31 @@ public class MedicalFolderController {
         return null;
     }
 
+    // Add drugs to medical folder.
+    @PutMapping("/ajoutMedic/{folderNumber}")
+    public MedicalFolder addDrug(@RequestBody Drug drug, @PathVariable Long folderNumber) {
+        Optional<MedicalFolder> medicalFolderOptional = medicalFolderRepository.findById(folderNumber);
+        if(medicalFolderOptional.isPresent()) {
+            MedicalFolder medicalFolder = medicalFolderOptional.get();
+            drug.setMedicalFolder(medicalFolder);
+            drugRepository.save(drug);
+            return medicalFolderRepository.save(medicalFolder);
+        }
+        return null;
+    }
+    // Delete a drug from medical folder.
+  /*  @PutMapping("/supprimerMedic/{folderNumber}")
+    public MedicalFolder deleteDrug(@RequestBody Drug drug, @PathVariable Long folderNumber) {
+        Optional<MedicalFolder> medicalFolderOptional = medicalFolderRepository.findById(folderNumber);
+        if(medicalFolderOptional.isPresent()) {
+            MedicalFolder medicalFolder = medicalFolderOptional.get();
+            drug.setMedicalFolder(null);
+            drugRepository.delete(drug);
+            return medicalFolderRepository.save(medicalFolder);
+        }
+        return null;
+    }
+*/
     @DeleteMapping("/dossiersMedicaux/{folderNumber}")
     public void deleteFolder(@PathVariable Long folderNumber) {
         // Remove medical folder from admin folder.

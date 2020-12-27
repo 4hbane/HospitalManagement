@@ -1,5 +1,6 @@
 package com.mna.crmhospital.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,8 @@ public class Drug {
     @NotNull
     @Temporal( TemporalType.DATE )
     private Date expirationDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private MedicalFolder medicalFolder;
 }

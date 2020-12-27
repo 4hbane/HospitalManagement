@@ -12,7 +12,7 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping(value = "/api")
 @AllArgsConstructor
-public class        AdminFolderController {
+public class AdminFolderController {
 
     private final AdminFolderRepository adminFolderRepository;
 
@@ -45,4 +45,7 @@ public class        AdminFolderController {
         if (adminFolderRepository.existsById(folderNumber))
             adminFolderRepository.deleteById(folderNumber);
     }
+
+    // Facture
+
 }

@@ -1,14 +1,13 @@
 package com.mna.crmhospital.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Random;
 
@@ -29,10 +28,14 @@ public class Bed {
     @NotNull
     private Boolean isOccupied;
 
+    @OneToOne(mappedBy = "bed",fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Hospitalization hospitalization;
+
     public static long count = 0;
 
     public static Bed getInstance() {
         Random random = new Random();
-        return new Bed(null, count++, 1L, "Hospital Bed",200d, false);
+        return new Bed(null, count++, 1L, "Hospital Bed",200d, false,null);
     }
 }
