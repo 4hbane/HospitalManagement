@@ -62,6 +62,15 @@ public class DrugController {
         return null;
     }
 
+    @PutMapping("/medicaments/prix/{name}")
+    public Boolean updateDrug(@RequestBody Drug drug, @PathVariable String name) {
+        if(drugRepository.existsByName (name) & drug.getPrice () != 0 & drug.getPrice () != null) {
+             drugRepository.updatePrice (name,drug.getPrice ());
+             return true;
+        }
+        return false;
+    }
+
     @DeleteMapping("/medicaments/{id}")
     public void deleteDrug(@PathVariable Long id) {
         if(drugRepository.existsById(id))
