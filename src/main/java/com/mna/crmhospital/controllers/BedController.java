@@ -50,6 +50,13 @@ public class BedController {
         return null;
     }
 
+    @PutMapping("/lits/prix")
+    public void updateBedPrice(@RequestBody Bed bed) {
+        if( bed.getPricePerDay () != 0 & bed.getPricePerDay () != null ){
+            bedRepository.updatePrice ( bed.getPricePerDay () );
+        }
+    }
+
     @DeleteMapping("/lits/{id}")
     public void deleteBed(@PathVariable Long id) {
         if(bedRepository.existsById(id))
