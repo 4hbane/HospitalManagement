@@ -37,7 +37,7 @@ public class DrugController {
         return drugRepository.findDrugByExpirationDateBefore(new Date());
     }
 
-    @GetMapping("/medicaments/nombre/   {name}")
+    @GetMapping("/medicaments/nombre/{name}")
     public Long getCountByName(@PathVariable String name) {
         return drugRepository.countByName(name);
     }

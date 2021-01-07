@@ -1,5 +1,6 @@
 package com.mna.crmhospital.controllers;
 
+import com.mna.crmhospital.entities.AdminFolder;
 import com.mna.crmhospital.entities.Bed;
 import com.mna.crmhospital.entities.Hospitalization;
 import com.mna.crmhospital.repositories.BedRepository;
@@ -24,9 +25,12 @@ public class HospitalizationController {
         return hospitalization.orElse(null);
     }
 
-    @PostMapping("/hospitalisations")
-    public Hospitalization saveHospitalization(@RequestBody Hospitalization hospitalization) {
-        return hospitalizationRepository.save(hospitalization);
+    @PutMapping("/hospitalisation/{id}")
+    public Hospitalization updateHospitalization(@RequestBody Hospitalization hospitalization,@PathVariable Long id) {
+        if(hospitalizationRepository.existsById(id) && hospitalization.getId().equals(id)) {
+            return hospitalizationRepository.save(hospitalization);
+        }
+        return null;
     }
 
     //Add Bed to Hospitalisation (or modify)

@@ -6,6 +6,9 @@ import com.mna.crmhospital.repositories.HospitalizationRepository;
 import com.mna.crmhospital.repositories.MedicalFolderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -34,8 +37,14 @@ public class BillController {
     }
 
     @GetMapping("/factures/date/{lastDateToPay}")
-    public List<Bill> getBillsByLastDateToPay(@PathVariable Date lastDateToPay) {
-        return billRepository.findBillsByLastDateToPay(lastDateToPay);
+    public List<Bill> getBillsByLastDateToPay(@PathVariable String lastDateToPay) {
+        Date date= null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(lastDateToPay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return billRepository.findBillsByLastDateToPay(date);
     }
 
     //Calcul de facture d'un dossier medical
@@ -60,7 +69,6 @@ public class BillController {
                 amountMedoc = amountMedoc + drug.getPrice();
 
             if(medicalFolder.getHospitalization() != null){
-                System.out.println("hospitalisation");
                 LocalDate entryInstant = medicalFolder.getHospitalization().getEntryDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate exitInstant = medicalFolder.getHospitalization().getExitDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 long hospitalizationPeriod = DAYS.between(entryInstant, exitInstant);

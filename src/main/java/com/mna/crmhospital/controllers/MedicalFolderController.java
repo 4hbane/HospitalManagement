@@ -44,7 +44,7 @@ public class MedicalFolderController {
         if(adminFolderOptional.isPresent()) {
             AdminFolder adminFolder = adminFolderOptional.get();
             medicalFolder.setAdminFolderNumber(adminFolderNumber);
-            adminFolder.setMedicalFolderNumber(medicalFolder.getFolderNumber());
+            adminFolder.setMedicalFolderNumber(medicalFolder.getAdminFolderNumber());
             return medicalFolderRepository.save(medicalFolder);
         }
         return null;
@@ -61,12 +61,13 @@ public class MedicalFolderController {
     }
 
     // Add hospitalization to medical folder.
-    @PutMapping("/hospitalisation/{folderNumber}")
+    @PutMapping("/ajoutHospitalisation/{folderNumber}")
     public MedicalFolder addHospitalization(@RequestBody Hospitalization hospitalization, @PathVariable Long folderNumber) {
         Optional<MedicalFolder> medicalFolderOptional = medicalFolderRepository.findById(folderNumber);
         if(medicalFolderOptional.isPresent()) {
             MedicalFolder medicalFolder = medicalFolderOptional.get();
             medicalFolder.setHospitalized(true);
+            medicalFolder.setHospitalization(hospitalization);
             hospitalization.setMedicalFolder(medicalFolder);
             hospitalizationRepository.save(hospitalization);
             return medicalFolderRepository.save(medicalFolder);

@@ -32,6 +32,7 @@ public class StaffController {
         return staffRepository.findByEmail(email);
     }
 
+    // why contains ????? ( we should retrieve staff with the exact cin)
     @GetMapping("/personnels/cin/{partCIN}")
     public List<Staff> getStaffByCINContains(@PathVariable String partCIN) {
         return staffRepository.findByCINContains(partCIN);
@@ -47,7 +48,7 @@ public class StaffController {
         return staffRepository.findBySfunction(function);
     }
 
-    @GetMapping("/personnels/status/{status}")
+    @GetMapping("c")
     public List<Staff> getStaffByStatus(@PathVariable StaffStatus status) {
         return staffRepository.findByStatus(status);
     }

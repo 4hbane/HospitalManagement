@@ -9,5 +9,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface BillRepository extends JpaRepository<Bill, Long> {
-    List<Bill> findBillsByLastDateToPay(Date lastDateToPay);
+    List<Bill> findBillsByLastDateToPay (Date lastDateToPay);
 }

@@ -46,6 +46,5 @@ public class AdminFolderController {
             adminFolderRepository.deleteById(folderNumber);
     }
 
-    // Facture
 
 }
