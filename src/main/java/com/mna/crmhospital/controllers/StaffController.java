@@ -4,6 +4,7 @@ import com.mna.crmhospital.entities.Staff;
 import com.mna.crmhospital.entities.StaffFunction;
 import com.mna.crmhospital.entities.StaffStatus;
 import com.mna.crmhospital.repositories.StaffRepository;
+import com.mna.crmhospital.services.SUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class StaffController {
 
     private final StaffRepository staffRepository;
+    private SUserService sUserServiceImplementation;
 
     @GetMapping("/personnels")
     public List<Staff> getStaffs() { return staffRepository.findAll(); }
@@ -62,6 +64,7 @@ public class StaffController {
     @PostMapping("/personnels")
     public Staff saveStaff(@RequestBody Staff staff) {
         staff.setId(null); // Avoid update.
+        sUserServiceImplementation.saveUser( staff.getEmail (), staff.getCIN (), staff.getSfunction ().toString () );
         return staffRepository.save(staff);
     }
 

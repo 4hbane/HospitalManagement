@@ -3,6 +3,7 @@ package com.mna.crmhospital;
 import com.mna.crmhospital.entities.*;
 import com.mna.crmhospital.repositories.*;
 
+import com.mna.crmhospital.services.SUserService;
 import com.mna.crmhospital.services.SUserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,7 +29,7 @@ public class CRMHospitalApplication {
     @Bean
     CommandLineRunner start(AdminFolderRepository adminFolderRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository,
                             StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository,
-                            SRoleRepository sRoleRepository, SUserServiceImplementation sUserServiceImplementation) {
+                            SRoleRepository sRoleRepository, SUserService sUserServiceImplementation) {
         return args -> {
             // AdminFolders, MedicalFolders and Hospitalizations
             adminFolderRepository.save(new AdminFolder(1L,"Manal","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256987","cnops", 2l   ));
