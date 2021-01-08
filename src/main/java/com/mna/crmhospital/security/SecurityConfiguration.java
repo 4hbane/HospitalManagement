@@ -34,13 +34,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // TODO(): Uncomment authorization rules
-        //http.authorizeRequests().antMatchers("/login/**").permitAll();
 
-        http.authorizeRequests().anyRequest().permitAll();
-        // TODO(): Uncomment security filters.
-        //http.addFilter(new JWTAuthenticationFilter(authenticationManager(), sUserRepository));
-        //http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.authorizeRequests().antMatchers("/login/**").permitAll();
+
+        http.authorizeRequests().anyRequest().authenticated();
+
+        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), sUserRepository));
+        http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

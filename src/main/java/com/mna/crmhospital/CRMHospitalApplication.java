@@ -9,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
@@ -43,11 +42,12 @@ public class CRMHospitalApplication {
 
 
             // Staff, Beds and Drugs
-            staffRepository.save(new Staff(null, "Abdellah", "Ahbane", "JD000001", "abdou@email.com", "0607080901", "Aoulouz", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Reanimation", StaffFunction.DOCTOR, new Date()));
-            staffRepository.save(new Staff(null, "Mounib", "Elboujbaoui", "JD000002", "mounib@email.com", "0605070101", "Sidi Ifni", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Urgences", StaffFunction.DOCTOR, new Date()));
-            staffRepository.save(new Staff(null, "Manal", "Outtaleb", "JD000003", "manal@email.com", "06070445522", "Ouerzazate", new Date(), Gender.FEMALE, StaffStatus.ACTIVE, "RH", StaffFunction.RH, new Date()));
-            staffRepository.save(new Staff(null, "Ghani", "Kadouri", "JD000004", "ghani@email.com", "0307080901", "Marrakesh", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Reanimation", StaffFunction.PHARMACIST, new Date()));
-            staffRepository.save(new Staff(null, "Amine", "Sedgui", "JD000005", "amine@email.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "RECEP", StaffFunction.RECEPTIONIST, new Date()));
+            staffRepository.save(new Staff(null, "admin", "admin", "admin001", "admin@app.com", "0607080901", "Aoulouz", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Administration", StaffFunction.ADMIN, new Date()));
+            staffRepository.save(new Staff(null, "director", "director", "director001", "director@app.com", "0605070101", "Sidi Ifni", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Administration", StaffFunction.DIRECTOR, new Date()));
+            staffRepository.save(new Staff(null, "doctor", "doctor", "doctor001", "doctor@app.com", "06070445522", "Ouerzazate", new Date(), Gender.FEMALE, StaffStatus.ACTIVE, "Reanimation", StaffFunction.DOCTOR, new Date()));
+            staffRepository.save(new Staff(null, "pharmacist", "pharmacist", "pharmacist001", "pharmacist@app.com", "0307080901", "Marrakesh", new Date(), Gender.FEMALE, StaffStatus.ACTIVE, "Pharmacie", StaffFunction.PHARMACIST, new Date()));
+            staffRepository.save(new Staff(null, "receptionist", "receptionist", "receptionist001", "receptionist@app.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Administration", StaffFunction.RECEPTIONIST, new Date()));
+            staffRepository.save(new Staff(null, "rh", "rh", "rh001", "rh@app.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Ressources Humaines", StaffFunction.RH, new Date()));
 
 
 
@@ -63,26 +63,21 @@ public class CRMHospitalApplication {
 
 
             // Users and Roles
-            sRoleRepository.save(new SRole(null, "CLIENT"));
-            sRoleRepository.save(new SRole(null, "OFFICER"));
-            sRoleRepository.save(new SRole(null, "ADMIN"));
+            sRoleRepository.save(new SRole(null, StaffFunction.ADMIN.toString ()));
+            sRoleRepository.save(new SRole(null, StaffFunction.DIRECTOR.toString ()));
+            sRoleRepository.save(new SRole(null, StaffFunction.DOCTOR.toString ()));
+            sRoleRepository.save(new SRole(null, StaffFunction.PHARMACIST.toString ()));
+            sRoleRepository.save(new SRole(null, StaffFunction.RECEPTIONIST.toString ()));
+            sRoleRepository.save(new SRole(null, StaffFunction.RH.toString ()));
 
-            sUserServiceImplementation.saveUser( "atlas@gmail.com", bCryptPasswordEncoder.encode("atlas"), "ADMIN" );
-            sUserServiceImplementation.saveUser( "manal@backend.com", bCryptPasswordEncoder.encode("manal"), "CLIENT" );
-            sUserServiceImplementation.saveUser( "amine@frontend.com", "amine", "OFFICER" );
+            sUserServiceImplementation.saveUser( "admin@app.com", "admin", StaffFunction.ADMIN.toString () );
+            sUserServiceImplementation.saveUser( "director@app.com", "director", StaffFunction.DIRECTOR.toString () );
 
-            sUserServiceImplementation.saveUser ( "ameur@gmail.com", "ameur", "ADMIN" );
-            sUserServiceImplementation.saveUser ( "wahman@backend.com", "wahman", "CLIENT" );
-            sUserServiceImplementation.saveUser ( "mounib@frontend.com", "mounib", "OFFICER" );
+            sUserServiceImplementation.saveUser( "doctor@app.com", "doctor", StaffFunction.DOCTOR.toString () );
+            sUserServiceImplementation.saveUser( "pharmacist@app.com", "pharmacist", StaffFunction.PHARMACIST.toString ());
 
-            sUserServiceImplementation.saveUser ( "ahbane@backend.com", "ahbane", "CLIENT" );
-            sUserServiceImplementation.saveUser ( "ghani@frontend.com", "ghani", "OFFICER" );
-
-            sUserServiceImplementation.saveUser ( "lamia@gmail.com", "lamia", "CLIENT" );
-            sUserServiceImplementation.saveUser ( "salma@gmail.com", "salma", "OFFICER" );
-
-            sUserServiceImplementation.saveUser ( "mehdi@gmail.com", "mehdi", "CLIENT" );
-            sUserServiceImplementation.saveUser ( "ali@gmail.com", "ali", "OFFICER" );
+            sUserServiceImplementation.saveUser ( "receptionist@app.com", "receptionist", StaffFunction.RECEPTIONIST.toString () );
+            sUserServiceImplementation.saveUser ( "rh@app.com", "rh", StaffFunction.RH.toString () );
 
         };
     }
