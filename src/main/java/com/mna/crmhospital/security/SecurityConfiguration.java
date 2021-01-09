@@ -1,9 +1,7 @@
 package com.mna.crmhospital.security;
 
 import com.mna.crmhospital.repositories.SUserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,10 +32,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //NOTE(): Line below disables security.
+        http.authorizeRequests().anyRequest().permitAll();
 
-        http.authorizeRequests().antMatchers("/login/**").permitAll();
-
-        http.authorizeRequests().anyRequest().authenticated();
+        //http.authorizeRequests().antMatchers("/login/**").permitAll();
+        //http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), sUserRepository));
         http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

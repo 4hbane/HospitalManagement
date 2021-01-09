@@ -88,7 +88,7 @@ public class MedicalFolderController {
         return null;
     }
     // Delete a drug from medical folder.
-  /*  @PutMapping("/supprimerMedic/{folderNumber}")
+    @PutMapping("/supprimerMedic/{folderNumber}")
     public MedicalFolder deleteDrug(@RequestBody Drug drug, @PathVariable Long folderNumber) {
         Optional<MedicalFolder> medicalFolderOptional = medicalFolderRepository.findById(folderNumber);
         if(medicalFolderOptional.isPresent()) {
@@ -99,7 +99,7 @@ public class MedicalFolderController {
         }
         return null;
     }
-*/
+
     @DeleteMapping("/dossiersMedicaux/{folderNumber}")
     public void deleteFolder(@PathVariable Long folderNumber) {
         // Remove medical folder from admin folder.
