@@ -10,10 +10,10 @@ import java.util.Date;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class AdminFolder {
+public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long folderNumber;
+    private Long number;
     private String firstName;
     private String lastName;
     private String gender;

@@ -24,7 +24,7 @@ public class MedicalFolder {
 
     @NotNull
     @Column(unique=true)
-    private Long adminFolderNumber;
+    private Long patientNumber;
 
     @OneToOne(mappedBy = "medicalFolder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

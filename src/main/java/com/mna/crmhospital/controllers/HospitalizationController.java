@@ -1,6 +1,5 @@
 package com.mna.crmhospital.controllers;
 
-import com.mna.crmhospital.entities.AdminFolder;
 import com.mna.crmhospital.entities.Bed;
 import com.mna.crmhospital.entities.Hospitalization;
 import com.mna.crmhospital.repositories.BedRepository;

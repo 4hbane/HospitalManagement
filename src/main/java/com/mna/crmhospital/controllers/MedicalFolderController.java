@@ -1,10 +1,10 @@
 package com.mna.crmhospital.controllers;
 
-import com.mna.crmhospital.entities.AdminFolder;
+import com.mna.crmhospital.entities.Patient;
 import com.mna.crmhospital.entities.Drug;
 import com.mna.crmhospital.entities.Hospitalization;
 import com.mna.crmhospital.entities.MedicalFolder;
-import com.mna.crmhospital.repositories.AdminFolderRepository;
+import com.mna.crmhospital.repositories.PatientRepository;
 import com.mna.crmhospital.repositories.DrugRepository;
 import com.mna.crmhospital.repositories.HospitalizationRepository;
 import com.mna.crmhospital.repositories.MedicalFolderRepository;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class MedicalFolderController {
 
-    private final AdminFolderRepository adminFolderRepository;
+    private final PatientRepository patientRepository;
     private final MedicalFolderRepository medicalFolderRepository;
     private final HospitalizationRepository hospitalizationRepository;
     private final DrugRepository drugRepository;
@@ -38,13 +38,13 @@ public class MedicalFolderController {
         return null;
     }
 
-    @PostMapping("/dossiersMedicaux/{adminFolderNumber}") // Adds a MedicalFolder to DB but managed ties with AdminFolder.
-    public MedicalFolder saveFolder(@RequestBody MedicalFolder medicalFolder, @PathVariable Long adminFolderNumber) {
-        Optional<AdminFolder> adminFolderOptional = adminFolderRepository.findById(adminFolderNumber);
-        if(adminFolderOptional.isPresent()) {
-            AdminFolder adminFolder = adminFolderOptional.get();
-            medicalFolder.setAdminFolderNumber(adminFolderNumber);
-            adminFolder.setMedicalFolderNumber(medicalFolder.getAdminFolderNumber());
+    @PostMapping("/dossiersMedicaux/{patientNumber}") // Adds a MedicalFolder to DB but managed ties with Patient.
+    public MedicalFolder saveFolder(@RequestBody MedicalFolder medicalFolder, @PathVariable Long patientNumber) {
+        Optional<Patient> patientOptional = patientRepository.findById(patientNumber);
+        if(patientOptional.isPresent()) {
+            Patient patient = patientOptional.get();
+            medicalFolder.setPatientNumber(patientNumber);
+            patient.setMedicalFolderNumber(medicalFolder.getPatientNumber());
             return medicalFolderRepository.save(medicalFolder);
         }
         return null;
@@ -53,8 +53,8 @@ public class MedicalFolderController {
     @PutMapping("/dossiersMedicaux/{folderNumber}")
     public MedicalFolder updateFolder(@RequestBody MedicalFolder medicalFolder, @PathVariable Long folderNumber) {
         if(medicalFolderRepository.existsById(folderNumber) && medicalFolder.getFolderNumber().equals(folderNumber)) {
-            AdminFolder adminFolder = adminFolderRepository.findByMedicalFolderNumber(folderNumber);
-            medicalFolder.setAdminFolderNumber(adminFolder.getFolderNumber());
+            Patient patient = patientRepository.findByMedicalFolderNumber(folderNumber);
+            medicalFolder.setPatientNumber(patient.getNumber());
             return medicalFolderRepository.save(medicalFolder);
         }
         return null;
@@ -102,9 +102,9 @@ public class MedicalFolderController {
 
     @DeleteMapping("/dossiersMedicaux/{folderNumber}")
     public void deleteFolder(@PathVariable Long folderNumber) {
-        // Remove medical folder from admin folder.
-        AdminFolder adminFolder = adminFolderRepository.findByMedicalFolderNumber(folderNumber); // NOTE(): Medical folder can't exist on it's own. No need to check for AdminFolder availability.
-        adminFolder.setMedicalFolderNumber(null);
+        // Remove medical folder from patient.
+        Patient patient = patientRepository.findByMedicalFolderNumber(folderNumber); // NOTE(): Medical folder can't exist on it's own. No need to check for Patient availability.
+        patient.setMedicalFolderNumber(null);
         medicalFolderRepository.deleteById(folderNumber);
     }
 }

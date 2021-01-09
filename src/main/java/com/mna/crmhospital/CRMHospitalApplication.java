@@ -4,7 +4,6 @@ import com.mna.crmhospital.entities.*;
 import com.mna.crmhospital.repositories.*;
 
 import com.mna.crmhospital.services.SUserService;
-import com.mna.crmhospital.services.SUserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,9 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @SpringBootApplication
 public class CRMHospitalApplication {
@@ -27,15 +24,15 @@ public class CRMHospitalApplication {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Bean
-    CommandLineRunner start(AdminFolderRepository adminFolderRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository,
+    CommandLineRunner start(PatientRepository patientRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository,
                             StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository,
                             SRoleRepository sRoleRepository, SUserService sUserServiceImplementation) {
         return args -> {
             // AdminFolders, MedicalFolders and Hospitalizations
-            adminFolderRepository.save(new AdminFolder(1L,"Manal","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256987","cnops", 2l   ));
-            adminFolderRepository.save(new AdminFolder(2L,"Majdouline","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256907","cnops", null));
-            adminFolderRepository.save(new AdminFolder(3L,"Abdou","Ahbane","Homme",new Date(),"aoulouz", 20000L,"marie","Ingenieur","0661363636","PL2504987","cnops",1L));
-            adminFolderRepository.save(new AdminFolder(4L,"Mounib","Elboujbaoui","Homme",new Date(),"ifni", 55000L,"Celibataire","Ingenieur","0661363636","PL256687","cnops",null));
+            patientRepository.save(new Patient(1L,"Manal","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256987","cnops", 2l   ));
+            patientRepository.save(new Patient(2L,"Majdouline","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256907","cnops", null));
+            patientRepository.save(new Patient(3L,"Abdou","Ahbane","Homme",new Date(),"aoulouz", 20000L,"marie","Ingenieur","0661363636","PL2504987","cnops",1L));
+            patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","Homme",new Date(),"ifni", 55000L,"Celibataire","Ingenieur","0661363636","PL256687","cnops",null));
             MedicalFolder dos =  medicalFolderRepository.save(new MedicalFolder(1L,"diabetique","positif au covid","vitamine C",true, 3L,null,null,null));
             Bed bed = bedRepository.save(Bed.getInstance());
             hospitalizationRepository.save(new Hospitalization(1L,"covid", new Date(), new Date(),"fievre","Mehdi","reanimation",dos,bed));
