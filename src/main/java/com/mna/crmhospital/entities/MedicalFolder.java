@@ -26,16 +26,4 @@ public class MedicalFolder {
     @Column(unique=true)
     private Long patientNumber;
 
-    @OneToOne(mappedBy = "medicalFolder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private Hospitalization hospitalization;
-
-    @OneToMany(mappedBy = "medicalFolder", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Drug> drugs;
-
-    @OneToOne(mappedBy = "medicalFolder",fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Bill bill;
-
 }

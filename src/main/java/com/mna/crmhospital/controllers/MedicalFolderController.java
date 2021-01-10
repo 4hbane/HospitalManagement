@@ -61,6 +61,7 @@ public class MedicalFolderController {
     }
 
     // Add hospitalization to medical folder.
+/*
     @PutMapping("/ajoutHospitalisation/{folderNumber}")
     public MedicalFolder addHospitalization(@RequestBody Hospitalization hospitalization, @PathVariable Long folderNumber) {
         Optional<MedicalFolder> medicalFolderOptional = medicalFolderRepository.findById(folderNumber);
@@ -74,8 +75,9 @@ public class MedicalFolderController {
         }
         return null;
     }
+*/
 
-    // Add drugs to medical folder.
+/*    // Add drugs to medical folder.
     @PutMapping("/ajoutMedic/{folderNumber}")
     public MedicalFolder addDrug(@RequestBody Drug drug, @PathVariable Long folderNumber) {
         Optional<MedicalFolder> medicalFolderOptional = medicalFolderRepository.findById(folderNumber);
@@ -86,9 +88,9 @@ public class MedicalFolderController {
             return medicalFolderRepository.save(medicalFolder);
         }
         return null;
-    }
+    }*/
     // Delete a drug from medical folder.
-    @PutMapping("/supprimerMedic/{folderNumber}")
+   /* @PutMapping("/supprimerMedic/{folderNumber}")
     public MedicalFolder deleteDrug(@RequestBody Drug drug, @PathVariable Long folderNumber) {
         Optional<MedicalFolder> medicalFolderOptional = medicalFolderRepository.findById(folderNumber);
         if(medicalFolderOptional.isPresent()) {
@@ -98,7 +100,7 @@ public class MedicalFolderController {
             return medicalFolderRepository.save(medicalFolder);
         }
         return null;
-    }
+    }*/
 
     @DeleteMapping("/dossiersMedicaux/{folderNumber}")
     public void deleteFolder(@PathVariable Long folderNumber) {

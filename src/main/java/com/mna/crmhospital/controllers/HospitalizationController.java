@@ -7,6 +7,7 @@ import com.mna.crmhospital.repositories.HospitalizationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,10 +19,22 @@ public class HospitalizationController {
     private final HospitalizationRepository hospitalizationRepository;
     private final BedRepository bedRepository;
 
+    @GetMapping("/hospitalisations/")
+    public List<Hospitalization> getHospitalizations() {
+        return hospitalizationRepository.findAll();
+    }
+
     @GetMapping("/hospitalisation/{id}")
     public Hospitalization getHospitalization(@PathVariable Long id) {
         Optional<Hospitalization> hospitalization = hospitalizationRepository.findById(id);
         return hospitalization.orElse(null);
+    }
+
+
+    @PostMapping("/hospitalisation/")
+    public Hospitalization saveHospitalization(@RequestBody Hospitalization hospitalization) {
+        hospitalization.setId(null);
+        return hospitalizationRepository.save(hospitalization);
     }
 
     @PutMapping("/hospitalisation/{id}")
@@ -44,5 +57,7 @@ public class HospitalizationController {
         return hospitalizationRepository.save(hospitalization); }
         return null;
     }
+
+    //TODO(): More controllers needed.
 
 }

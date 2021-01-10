@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Random;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor @ToString
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Bed {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -37,5 +37,17 @@ public class Bed {
     public static Bed getInstance() {
         Random random = new Random();
         return new Bed(null, count++, 1L, "Hospital Bed",200d, false,null);
+    }
+
+    @Override
+    public String toString() {
+        return "Bed{" +
+                "id=" + id +
+                ", roomNumber=" + roomNumber +
+                ", floorNumber=" + floorNumber +
+                ", service='" + service + '\'' +
+                ", pricePerDay=" + pricePerDay +
+                ", isOccupied=" + isOccupied +
+                '}';
     }
 }

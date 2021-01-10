@@ -24,19 +24,20 @@ public class CRMHospitalApplication {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Bean
-    CommandLineRunner start(PatientRepository patientRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository,
+    CommandLineRunner start(PatientRepository patientRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository, ConsultationRepository consultationRepository,
                             StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository,
                             SRoleRepository sRoleRepository, SUserService sUserServiceImplementation) {
         return args -> {
             // AdminFolders, MedicalFolders and Hospitalizations
-            patientRepository.save(new Patient(1L,"Manal","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256987","cnops", 2l   ));
+            patientRepository.save(new Patient(1L,"Manal","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256987","cnops", 2L   ));
             patientRepository.save(new Patient(2L,"Majdouline","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256907","cnops", null));
             patientRepository.save(new Patient(3L,"Abdou","Ahbane","Homme",new Date(),"aoulouz", 20000L,"marie","Ingenieur","0661363636","PL2504987","cnops",1L));
             patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","Homme",new Date(),"ifni", 55000L,"Celibataire","Ingenieur","0661363636","PL256687","cnops",null));
-            MedicalFolder dos =  medicalFolderRepository.save(new MedicalFolder(1L,"diabetique","positif au covid","vitamine C",true, 3L,null,null,null));
+            //MedicalFolder dos =  medicalFolderRepository.save(new MedicalFolder(1L,"Diabetique","Positif au covid","Vitamine C", true, 3L));
             Bed bed = bedRepository.save(Bed.getInstance());
-            hospitalizationRepository.save(new Hospitalization(1L,"covid", new Date(), new Date(),"fievre","Mehdi","reanimation",dos,bed));
-            medicalFolderRepository.save(new MedicalFolder(2L,"diabetique","positif au covid","vitamine C",false, 1L,null,null,null));
+            Hospitalization h = hospitalizationRepository.save(new Hospitalization(1L, 3L, "Symptômes de corona", null, bed,"Dr. Outtaleb Manal","Reanimation"));
+            Consultation c = consultationRepository.save(new Consultation(1L, 2L, "Symptômes de diabète", "Dr. Outtaleb Manal"));
+            medicalFolderRepository.save(new MedicalFolder(2L,"Diabetique","Positif au covid","Vitamine C", false, 1L));
 
 
             // Staff, Beds and Drugs
@@ -55,9 +56,9 @@ public class CRMHospitalApplication {
             bedRepository.save(Bed.getInstance());
             bedRepository.save(Bed.getInstance());
 
-            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26, new Date(),dos));
-            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,6.58,new Date(),dos));
-            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,60.00, new Date(), dos));
+            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26, new Date(), h));
+            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,6.58,new Date(), c));
+            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,60.00, new Date(), c));
 
 
             // Users and Roles

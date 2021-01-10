@@ -28,5 +28,5 @@ public class Drug {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    private MedicalFolder medicalFolder;
+    private Visit visit;
 }

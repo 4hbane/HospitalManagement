@@ -4,22 +4,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Hospitalization {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String existingConditions;
-    private Date entryDate;
+@Data @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true)
+public class Hospitalization extends Visit {
     private Date exitDate;
-    private String admissionReason;
     private String doctorName;
     private String serviceHospitalization;
 
@@ -32,6 +26,11 @@ public class Hospitalization {
     @JsonManagedReference
     private Bed bed;
 
+    public Hospitalization(Long id, Long patientNumber, String reason, Date exitDate, Bed bed, String doctorName, String serviceHospitalization) {
+        super(id, patientNumber, reason, doctorName);
+        this.exitDate = exitDate;
+        this.serviceHospitalization = serviceHospitalization;
+        this.bed = bed;
+    }
 
-    public Hospitalization(Long id, String condition, Date entryDate, Date exitDate, String admissionReason, Long bedNumber, String doctorName, String serviceHospitalization) { }
 }
