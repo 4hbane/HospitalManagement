@@ -28,19 +28,50 @@ public class CRMHospitalApplication {
                             StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository,
                             SRoleRepository sRoleRepository, SUserService sUserServiceImplementation) {
         return args -> {
-            // AdminFolders, MedicalFolders and Hospitalizations
-            patientRepository.save(new Patient(1L,"Manal","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256987","cnops", 2L   ));
-            patientRepository.save(new Patient(2L,"Majdouline","Outtaleb","Femme",new Date(),"ouarzazate", 45000L,"Celibataire","Ingenieur","0661363636","PL256907","cnops", null));
-            patientRepository.save(new Patient(3L,"Abdou","Ahbane","Homme",new Date(),"aoulouz", 20000L,"marie","Ingenieur","0661363636","PL2504987","cnops",1L));
-            patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","Homme",new Date(),"ifni", 55000L,"Celibataire","Ingenieur","0661363636","PL256687","cnops",null));
-            //MedicalFolder dos =  medicalFolderRepository.save(new MedicalFolder(1L,"Diabetique","Positif au covid","Vitamine C", true, 3L));
-            Bed bed = bedRepository.save(Bed.getInstance());
-            Hospitalization h = hospitalizationRepository.save(new Hospitalization(1L, 3L, "Symptômes de corona", null, bed,"Dr. Outtaleb Manal","Reanimation"));
-            Consultation c = consultationRepository.save(new Consultation(1L, 2L, "Symptômes de diabète", "Dr. Outtaleb Manal"));
-            medicalFolderRepository.save(new MedicalFolder(2L,"Diabetique","Positif au covid","Vitamine C", false, 1L));
+
+            // Patients
+            patientRepository.save(new Patient(1L,"Manal","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Célibataire","Ingenieur","0673290031","PL25617","CNOPS", 1L));
+            patientRepository.save(new Patient(2L,"Majdouline","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Célibataire","Ingenieur","0770359120","JK27106","CNOPS", 2L));
+            patientRepository.save(new Patient(3L,"Abdou","Ahbane","Homme", new Date(),"Avenue Hassan II, Aoulouz", 83052L,"Marié","Ingenieur","0654330112","LM93510","CNOPS",3L));
+            patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","Homme", new Date(),"Rue Caire, Sidi Ifni", 85200L,"Célibataire","Ingenieur","0623877719","JD50000","CNOPS",4L));
 
 
-            // Staff, Beds and Drugs
+
+            // MedicalFolders
+            medicalFolderRepository.save(new MedicalFolder(1L,"Diabète","État d’hypoglycémie","", false, 1L));
+            medicalFolderRepository.save(new MedicalFolder(2L,"Épilepsie","Crises d’épilepsie régulières","", true, 2L));
+            medicalFolderRepository.save(new MedicalFolder(3L,"Maladie de Parkinson","Lenteur à se mouvoir, à décoder et à traiter l’information","", false, 3L));
+            medicalFolderRepository.save(new MedicalFolder(4L,"Glaucome","Rétrécissement progressif du champ visuel","", false, 4L));
+
+            // Beds.
+            Bed b = bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+            bedRepository.save(Bed.getInstance());
+
+            // Hospitalization of Patient 2L, of Medical Folder 2L
+            Hospitalization h = hospitalizationRepository.save(new Hospitalization(null, 2L, "Crises d’épilepsie régulières", null, b,"Dr. Majdouline Outaleb","Service de Neurologie."));
+
+            // Consultations
+            // Patient 1
+            Consultation c1 = consultationRepository.save(new Consultation(null, 1L, "Perte de conscience", "Dr. Outaleb Manal"));
+            Consultation c2 = consultationRepository.save(new Consultation(null, 1L, "Confusion, désorientation et irritabilité", "Dr. Outaleb Manal"));
+            Consultation c3 = consultationRepository.save(new Consultation(null, 1L, "Étourdissements, fatigue, irritabilité", "Dr. Outaleb Manal"));
+
+            // Patient 3
+            Consultation c4 = consultationRepository.save(new Consultation(null, 3L, "Maladie de Parkinson", "Dr. Outaleb Manal"));
+
+            // Patient 4
+            Consultation c5 = consultationRepository.save(new Consultation(null, 4L, "Trouble de vision", "Dr. Ahbane Abdellah"));
+
+
+            // Staff
             staffRepository.save(new Staff(null, "admin", "admin", "admin001", "admin@app.com", "0607080901", "Aoulouz", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Administration", StaffFunction.ADMIN, new Date()));
             staffRepository.save(new Staff(null, "director", "director", "director001", "director@app.com", "0605070101", "Sidi Ifni", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Administration", StaffFunction.DIRECTOR, new Date()));
             staffRepository.save(new Staff(null, "doctor", "doctor", "doctor001", "doctor@app.com", "06070445522", "Ouerzazate", new Date(), Gender.FEMALE, StaffStatus.ACTIVE, "Reanimation", StaffFunction.DOCTOR, new Date()));
@@ -49,16 +80,28 @@ public class CRMHospitalApplication {
             staffRepository.save(new Staff(null, "rh", "rh", "rh001", "rh@app.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Ressources Humaines", StaffFunction.RH, new Date()));
 
 
-
-            bedRepository.save(Bed.getInstance());
-            bedRepository.save(Bed.getInstance());
-            bedRepository.save(Bed.getInstance());
-            bedRepository.save(Bed.getInstance());
-            bedRepository.save(Bed.getInstance());
-
+            // Drugs
+            // Hospitalisation Patient 2
             drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26, new Date(), h));
-            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,6.58,new Date(), c));
-            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,60.00, new Date(), c));
+            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,100.58,new Date(), h));
+            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,23.58,new Date(), h));
+            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,48.00,new Date(), h));
+
+            // Patient 1
+            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,6.58,new Date(), c1));
+            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,21.00, new Date(), c1));
+            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,63.00, new Date(), c1));
+
+            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,60.00, new Date(), c2));
+            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,6.58,new Date(), c3));
+
+            // Patient 3
+            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,17.8,new Date(), c4));
+
+            // Patient 4
+            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,92.58,new Date(), c5));
+
+
 
 
             // Users and Roles

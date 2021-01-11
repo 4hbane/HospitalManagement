@@ -14,7 +14,6 @@ import java.util.Date;
 @Data @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper = true)
 public class Hospitalization extends Visit {
     private Date exitDate;
-    private String doctorName;
     private String serviceHospitalization;
 
     @OneToOne(fetch = FetchType.LAZY)
