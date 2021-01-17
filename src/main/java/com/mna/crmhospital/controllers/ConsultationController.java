@@ -31,7 +31,6 @@ public class ConsultationController {
     @PostMapping("/consultations")
     public Consultation saveConsultation(@RequestBody Consultation consultation) {
         consultation.setId(null);
-        consultation.setDrugs(null);
         return consultationRepository.save(consultation);
     }
 
@@ -40,7 +39,6 @@ public class ConsultationController {
     @PutMapping("/consultations/{id}")
     public Consultation updateConsultation(@RequestBody Consultation consultation, @PathVariable Long id) {
         if(consultationRepository.existsById(id) && consultation.getId().equals(id)) {
-            consultation.setDrugs(consultationRepository.findById(id).get().getDrugs());
             return consultationRepository.save(consultation);
         }
         return null;

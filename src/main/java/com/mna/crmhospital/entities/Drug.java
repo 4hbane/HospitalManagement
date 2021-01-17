@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
@@ -22,11 +23,4 @@ public class Drug {
     private DrugType type;
     @NotNull
     private Double price;
-    @NotNull
-    @Temporal( TemporalType.DATE )
-    private Date expirationDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Visit visit;
 }

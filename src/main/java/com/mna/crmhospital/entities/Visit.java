@@ -30,9 +30,13 @@ public class Visit {
 
     private String doctorName;
 
-    @OneToMany(mappedBy = "visit", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="drugs_visit",
+            joinColumns=@JoinColumn(name="visit_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="drug_id", referencedColumnName="id"))
     private List<Drug> drugs;
+
 
     @OneToOne(mappedBy = "visit",fetch = FetchType.LAZY)
     @JsonBackReference

@@ -11,7 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class CRMHospitalApplication {
@@ -25,7 +27,7 @@ public class CRMHospitalApplication {
 
     @Bean
     CommandLineRunner start(PatientRepository patientRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository, ConsultationRepository consultationRepository,
-                            StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository,
+                            StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository, DrungInventoryRepository drungInventoryRepository,
                             SRoleRepository sRoleRepository, SUserService sUserServiceImplementation) {
         return args -> {
 
@@ -81,27 +83,16 @@ public class CRMHospitalApplication {
 
 
             // Drugs
-            // Hospitalisation Patient 2
-            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26, new Date(), h));
-            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,100.58,new Date(), h));
-            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,23.58,new Date(), h));
-            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,48.00,new Date(), h));
+            Drug Dolipran = drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,23.58));
+            Drug Supradyn = drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26));
+            Drug Aspegic = drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,48.00));
 
-            // Patient 1
-            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,6.58,new Date(), c1));
-            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,21.00, new Date(), c1));
-            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,63.00, new Date(), c1));
+            List<Drug> drugsList = new ArrayList<>();
+            drugsList.add(Dolipran);
+            drugsList.add(Supradyn);
 
-            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,60.00, new Date(), c2));
-            drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,6.58,new Date(), c3));
-
-            // Patient 3
-            drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,17.8,new Date(), c4));
-
-            // Patient 4
-            drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,92.58,new Date(), c5));
-
-
+            DrugInventory di = drungInventoryRepository.save(new DrugInventory(null, drugsList, null));
+            System.out.println(di.getDrugs());
 
 
             // Users and Roles

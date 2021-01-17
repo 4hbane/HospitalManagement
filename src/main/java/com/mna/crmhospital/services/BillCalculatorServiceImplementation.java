@@ -35,7 +35,8 @@ public class BillCalculatorServiceImplementation implements BillCalculatorServic
 
         b.setLastDateToPay(cal.getTime());
         double amount = 0.0;
-        for(Drug drug : v.getDrugs()) amount += drug.getPrice();
+        // TODO(): TOFIX NOT WORKING.
+        //for(Drug drug : v.getDrugs()) amount += drug.getPrice();
         b.setAmount(amount);
         return b;
     }
@@ -59,7 +60,8 @@ public class BillCalculatorServiceImplementation implements BillCalculatorServic
         int hospitalizationPeriod = (int)( (h.getExitDate().getTime() - h.getVisitDate().getTime())
                 / (1000 * 60 * 60 * 24) );
         System.out.println(hospitalizationPeriod);
-        for(Drug drug : h.getDrugs()) amount += drug.getPrice();
+        // TODO(): TOFIX NOT WORKING.
+        //for(Drug drug : h.getDrugs()) amount += drug.getPrice();
         amount += h.getBed().getPricePerDay() * hospitalizationPeriod;
         b.setAmount(amount);
         return b;

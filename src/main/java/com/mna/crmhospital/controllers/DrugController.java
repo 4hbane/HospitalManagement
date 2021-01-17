@@ -34,17 +34,14 @@ public class DrugController {
 
     @GetMapping("/medicamentsexpire")
     public List<Drug> getExpiredDrugs() {
-        return drugRepository.findDrugByExpirationDateBefore(new Date());
+        //return drugRepository.findDrugByExpirationDateBefore(new Date());
+        // TODO():
+        return null;
     }
 
     @GetMapping("/medicaments/nombre/{name}")
     public Long getCountByName(@PathVariable String name) {
         return drugRepository.countByName(name);
-    }
-
-    @GetMapping("/medicaments/nombre/type/{type}")
-    public Long getCountByType(@PathVariable DrugType type) {
-        return drugRepository.countByType(type);
     }
 
     @PostMapping("/medicaments")

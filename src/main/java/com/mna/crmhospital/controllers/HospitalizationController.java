@@ -34,7 +34,8 @@ public class HospitalizationController {
     @PostMapping("/hospitalisations")
     public Hospitalization saveHospitalization(@RequestBody Hospitalization hospitalization) {
         hospitalization.setId(null);
-        hospitalization.setDrugs(null);
+        // TODO():
+        //hospitalization.setDrugs(null);
         hospitalization.setBed(null);
         return hospitalizationRepository.save(hospitalization);
     }
@@ -45,7 +46,8 @@ public class HospitalizationController {
     public Hospitalization updateHospitalization(@RequestBody Hospitalization hospitalization, @PathVariable Long id) {
         if(hospitalizationRepository.existsById(id) && hospitalization.getId().equals(id)) {
             Hospitalization oldHospitalization = hospitalizationRepository.findById(id).get();
-            hospitalization.setDrugs(oldHospitalization.getDrugs());
+            // TODO():
+            //hospitalization.setDrugs(oldHospitalization.getDrugs());
             hospitalization.setBed(oldHospitalization.getBed());
             return hospitalizationRepository.save(hospitalization);
         }
