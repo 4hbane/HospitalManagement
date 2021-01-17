@@ -50,7 +50,7 @@ public class StaffController {
         return staffRepository.findBySfunction(function);
     }
 
-    @GetMapping("c")
+    @GetMapping("/personnels/status/{status}")
     public List<Staff> getStaffByStatus(@PathVariable StaffStatus status) {
         return staffRepository.findByStatus(status);
     }
@@ -64,7 +64,8 @@ public class StaffController {
     @PostMapping("/personnels")
     public Staff saveStaff(@RequestBody Staff staff) {
         staff.setId(null); // Avoid update.
-        sUserServiceImplementation.saveUser( staff.getEmail (), staff.getCIN (), staff.getSfunction ().toString () );
+        sUserServiceImplementation.saveUser( staff.getEmail(), staff.getCIN(), staff.getSfunction().toString () );
+
         return staffRepository.save(staff);
     }
 

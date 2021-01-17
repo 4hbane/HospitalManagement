@@ -26,19 +26,27 @@ public class ConsultationController {
         return consultation.orElse(null);
     }
 
-    @PostMapping("/consultations/")
+    //NOTE(): Doesn't change drugs.
+    //NOTE(): Must be changed in DrugDB.
+    @PostMapping("/consultations")
     public Consultation saveConsultation(@RequestBody Consultation consultation) {
         consultation.setId(null);
+        consultation.setDrugs(null);
         return consultationRepository.save(consultation);
     }
 
-    @PutMapping("/consultation/{id}")
+    //NOTE(): Doesn't change drugs.
+    //NOTE(): Must be changed in DrugDB.
+    @PutMapping("/consultations/{id}")
     public Consultation updateConsultation(@RequestBody Consultation consultation, @PathVariable Long id) {
         if(consultationRepository.existsById(id) && consultation.getId().equals(id)) {
+            consultation.setDrugs(consultationRepository.findById(id).get().getDrugs());
             return consultationRepository.save(consultation);
         }
         return null;
     }
 
-    //TODO(): More controllers needed.
+
+    // TODO(): CUD for drugs in consultation.
+    // TODO(): More controllers needed.
 }

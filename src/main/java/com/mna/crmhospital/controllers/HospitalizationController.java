@@ -19,27 +19,34 @@ public class HospitalizationController {
     private final HospitalizationRepository hospitalizationRepository;
     private final BedRepository bedRepository;
 
-    @GetMapping("/hospitalisations/")
+    @GetMapping("/hospitalisations")
     public List<Hospitalization> getHospitalizations() {
         return hospitalizationRepository.findAll();
     }
 
-    @GetMapping("/hospitalisation/{id}")
+    @GetMapping("/hospitalisations/{id}")
     public Hospitalization getHospitalization(@PathVariable Long id) {
         Optional<Hospitalization> hospitalization = hospitalizationRepository.findById(id);
         return hospitalization.orElse(null);
     }
 
-
-    @PostMapping("/hospitalisation/")
+    // TODO(): TOFIX NOT WORKING.
+    @PostMapping("/hospitalisations")
     public Hospitalization saveHospitalization(@RequestBody Hospitalization hospitalization) {
         hospitalization.setId(null);
+        hospitalization.setDrugs(null);
+        hospitalization.setBed(null);
         return hospitalizationRepository.save(hospitalization);
     }
 
-    @PutMapping("/hospitalisation/{id}")
-    public Hospitalization updateHospitalization(@RequestBody Hospitalization hospitalization,@PathVariable Long id) {
+    // NOTE(): Does not change bed / drugs
+    // NOTE(): Drugs added to Hospitalization/Consultation must be - from DrugDB.
+    @PutMapping("/hospitalisations/{id}")
+    public Hospitalization updateHospitalization(@RequestBody Hospitalization hospitalization, @PathVariable Long id) {
         if(hospitalizationRepository.existsById(id) && hospitalization.getId().equals(id)) {
+            Hospitalization oldHospitalization = hospitalizationRepository.findById(id).get();
+            hospitalization.setDrugs(oldHospitalization.getDrugs());
+            hospitalization.setBed(oldHospitalization.getBed());
             return hospitalizationRepository.save(hospitalization);
         }
         return null;
@@ -50,11 +57,12 @@ public class HospitalizationController {
     public Hospitalization addBed(@RequestBody Bed bed, @PathVariable Long id){
         Optional<Hospitalization> hospitalizationOptional = hospitalizationRepository.findById(id);
         if(hospitalizationOptional.isPresent()) {
-        Hospitalization hospitalization = hospitalizationOptional.get();
-        hospitalization.setBed(bed);
-        bed.setIsOccupied(true);
-        bedRepository.save(bed);
-        return hospitalizationRepository.save(hospitalization); }
+            Hospitalization hospitalization = hospitalizationOptional.get();
+            hospitalization.setBed(bed);
+            bed.setIsOccupied(true);
+            bedRepository.save(bed);
+            return hospitalizationRepository.save(hospitalization);
+        }
         return null;
     }
 

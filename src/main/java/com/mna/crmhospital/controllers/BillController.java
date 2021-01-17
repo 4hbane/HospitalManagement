@@ -2,6 +2,7 @@ package com.mna.crmhospital.controllers;
 
 import com.mna.crmhospital.entities.*;
 import com.mna.crmhospital.repositories.BillRepository;
+import com.mna.crmhospital.repositories.HospitalizationRepository;
 import com.mna.crmhospital.repositories.VisitRepository;
 import com.mna.crmhospital.services.BillCalculatorService;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class BillController {
     private final BillRepository billRepository;
     private final BillCalculatorService billCalculatorService;
     private final VisitRepository visitRepository;
-
+    private final HospitalizationRepository hospitalizationRepository;
     @GetMapping("/factures")
     public List<Bill> getBills() { return billRepository.findAll(); }
 
@@ -43,14 +44,34 @@ public class BillController {
         return billRepository.findBillsByLastDateToPay(date);
     }
 
-    //Calcul de facture d'une visite
-    @GetMapping("/ajoutfactures/{id}")
-    public Bill saveBill(@PathVariable Long id) {
-        Optional<Visit> visitOptional = visitRepository.findById(id);
+    // Calcul de facture d'une visite
+    @GetMapping("/ajoutfactures/{visitId}")
+    public Bill saveBill(@PathVariable Long visitId) {
+        Optional<Visit> visitOptional = visitRepository.findById(visitId);
         if(visitOptional.isPresent()) {
             Bill b = billCalculatorService.calculateBill(visitOptional.get());
             return billRepository.save(b);
         }
         else return null;
+    }
+
+    @GetMapping("/factures/payer/{id}")
+    public Bill payBill(@PathVariable Long id) {
+        Optional<Bill> billOptional = billRepository.findById(id);
+        if(billOptional.isPresent()) {
+            // Make bill paid
+            Bill bill = billOptional.get();
+            bill.setPaid(true);
+            billRepository.save(bill);
+            // Free bed
+            Visit v = bill.getVisit();
+            if(v.getClass().equals(Hospitalization.class)) {
+                Hospitalization h = (Hospitalization) v;
+                h.getBed().setIsOccupied(false);
+                hospitalizationRepository.save(h);
+            }
+            return bill;
+        }
+        return null;
     }
 }

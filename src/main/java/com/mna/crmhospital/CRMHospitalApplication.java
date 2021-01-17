@@ -30,18 +30,18 @@ public class CRMHospitalApplication {
         return args -> {
 
             // Patients
-            patientRepository.save(new Patient(1L,"Manal","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Célibataire","Ingenieur","0673290031","PL25617","CNOPS", 1L));
-            patientRepository.save(new Patient(2L,"Majdouline","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Célibataire","Ingenieur","0770359120","JK27106","CNOPS", 2L));
-            patientRepository.save(new Patient(3L,"Abdou","Ahbane","Homme", new Date(),"Avenue Hassan II, Aoulouz", 83052L,"Marié","Ingenieur","0654330112","LM93510","CNOPS",3L));
-            patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","Homme", new Date(),"Rue Caire, Sidi Ifni", 85200L,"Célibataire","Ingenieur","0623877719","JD50000","CNOPS",4L));
+            patientRepository.save(new Patient(1L,"Manal","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Celibataire","Ingenieur","0673290031","PL25617","CNOPS", 1L));
+            patientRepository.save(new Patient(2L,"Majdouline","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Celibataire","Ingenieur","0770359120","JK27106","CNOPS", 2L));
+            patientRepository.save(new Patient(3L,"Abdou","Ahbane","Homme", new Date(),"Avenue Hassan II, Aoulouz", 83052L,"Marie","Ingenieur","0654330112","LM93510","CNOPS",3L));
+            patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","Homme", new Date(),"Rue Caire, Sidi Ifni", 85200L,"Celibataire","Ingenieur","0623877719","JD50000","CNOPS",4L));
 
 
 
             // MedicalFolders
-            medicalFolderRepository.save(new MedicalFolder(1L,"Diabète","État d’hypoglycémie","", false, 1L));
-            medicalFolderRepository.save(new MedicalFolder(2L,"Épilepsie","Crises d’épilepsie régulières","", true, 2L));
-            medicalFolderRepository.save(new MedicalFolder(3L,"Maladie de Parkinson","Lenteur à se mouvoir, à décoder et à traiter l’information","", false, 3L));
-            medicalFolderRepository.save(new MedicalFolder(4L,"Glaucome","Rétrécissement progressif du champ visuel","", false, 4L));
+            medicalFolderRepository.save(new MedicalFolder(1L,"Diabete","Etat d'hypoglycemie","", false, 1L));
+            medicalFolderRepository.save(new MedicalFolder(2L,"Epilepsie","Crises d'epilepsie regulieres","", true, 2L));
+            medicalFolderRepository.save(new MedicalFolder(3L,"Maladie de Parkinson","Lenteur à se mouvoir, à decoder et à traiter l'information","", false, 3L));
+            medicalFolderRepository.save(new MedicalFolder(4L,"Glaucome","Retrecissement progressif du champ visuel","", false, 4L));
 
             // Beds.
             Bed b = bedRepository.save(Bed.getInstance());
@@ -56,13 +56,13 @@ public class CRMHospitalApplication {
             bedRepository.save(Bed.getInstance());
 
             // Hospitalization of Patient 2L, of Medical Folder 2L
-            Hospitalization h = hospitalizationRepository.save(new Hospitalization(null, 2L, "Crises d’épilepsie régulières", null, b,"Dr. Majdouline Outaleb","Service de Neurologie."));
+            Hospitalization h = hospitalizationRepository.save(new Hospitalization(null, 2L, "Crises depilepsie regulieres", null, b,"Dr. Majdouline Outaleb","Service de Neurologie."));
 
             // Consultations
             // Patient 1
             Consultation c1 = consultationRepository.save(new Consultation(null, 1L, "Perte de conscience", "Dr. Outaleb Manal"));
-            Consultation c2 = consultationRepository.save(new Consultation(null, 1L, "Confusion, désorientation et irritabilité", "Dr. Outaleb Manal"));
-            Consultation c3 = consultationRepository.save(new Consultation(null, 1L, "Étourdissements, fatigue, irritabilité", "Dr. Outaleb Manal"));
+            Consultation c2 = consultationRepository.save(new Consultation(null, 1L, "Confusion, desorientation et irritabilite", "Dr. Outaleb Manal"));
+            Consultation c3 = consultationRepository.save(new Consultation(null, 1L, "Etourdissements, fatigue, irritabilité", "Dr. Outaleb Manal"));
 
             // Patient 3
             Consultation c4 = consultationRepository.save(new Consultation(null, 3L, "Maladie de Parkinson", "Dr. Outaleb Manal"));

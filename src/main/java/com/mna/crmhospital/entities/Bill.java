@@ -22,7 +22,7 @@ public class Bill {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
     private Long bill_no = count++;
-
+    private boolean paid;
     @Temporal( TemporalType.TIMESTAMP )
     @CreationTimestamp
     private Date creationDate;
