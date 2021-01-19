@@ -64,6 +64,22 @@ public class InventoryController {
         return i;
     }
 
+    // TODO(): Someone TEST this and remove comment. Add test to collection.
+    @PostMapping("/inventaire/{name}/{expiryDate}/{quantity}")
+    public Inventory saveInventoryEntry(@PathVariable String name, @PathVariable String expiryDate, @PathVariable int quantity) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Drug drug = drugRepository.findDrugByName(name);
+        List<Inventory> inventories = new ArrayList<>();
+        for(int i = 0; i < quantity; i++) {
+            Inventory i = new Inventory(null, drug, sdf.parse(expiryDate));
+            inventories.add(i);
+            inventoryRepository.save(i);
+            drug.getInventories().add(i);
+        }
+        drugRepository.save(drug);
+        return inventories;
+    }
+
     @DeleteMapping("/inventaire/{name}")
     public Inventory deleteInventoryEntry(@PathVariable String name) {
         return deleteOneInventoryEntry(name);
