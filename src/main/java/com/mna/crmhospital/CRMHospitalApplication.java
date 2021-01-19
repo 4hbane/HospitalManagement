@@ -94,6 +94,7 @@ public class CRMHospitalApplication {
             drugVisitRepository.save(new DrugVisit(null, Dolipran.getId(), h.getId(), 10));
 
 
+
             Inventory di = inventoryRepository.save(new Inventory(null, drugsList, null));
             System.out.println(di.getDrugs());
 

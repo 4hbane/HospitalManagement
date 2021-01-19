@@ -15,11 +15,10 @@ public interface DrugRepository extends JpaRepository<Drug, Long> {
 
     List<Drug> findDrugsByType(DrugType type);
     Boolean existsByName( String name);
-    Long countByName(String name);
 
     @Transactional
     @Modifying
     @Query("UPDATE Drug b  set b.price=:newPrice where b.name =:name")
-    public void updatePrice( @Param(value = "name") String name, @Param( "newPrice" ) Double newPrice);
+    public void updatePrice(@Param(value = "name") String name, @Param("newPrice") Double newPrice);
 
 }

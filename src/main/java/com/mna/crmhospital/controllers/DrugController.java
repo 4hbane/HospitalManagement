@@ -23,8 +23,7 @@ public class DrugController {
 
     @GetMapping("/medicaments/{id}")
     public Drug getDrug(@PathVariable Long id) {
-        Optional<Drug> drug = drugRepository.findById(id);
-        return drug.orElse(null);
+        return drugRepository.findById(id).orElse(null);
     }
 
     @GetMapping("/medicaments/type/{type}")
@@ -32,21 +31,11 @@ public class DrugController {
         return drugRepository.findDrugsByType(type);
     }
 
-    @GetMapping("/medicamentsexpire")
-    public List<Drug> getExpiredDrugs() {
-        //return drugRepository.findDrugByExpirationDateBefore(new Date());
-        // TODO():
-        return null;
-    }
-
-    @GetMapping("/medicaments/nombre/{name}")
-    public Long getCountByName(@PathVariable String name) {
-        return drugRepository.countByName(name);
-    }
 
     @PostMapping("/medicaments")
     public Drug saveDrug(@RequestBody Drug drug) {
         drug.setId(null);
+        drug.setVisits(null);
         return drugRepository.save(drug);
     }
 
@@ -59,10 +48,12 @@ public class DrugController {
         return null;
     }
 
+
+    // TODO(): Remove if not used.
     @PutMapping("/medicaments/prix/{name}")
     public Boolean updateDrug(@RequestBody Drug drug, @PathVariable String name) {
-        if(drugRepository.existsByName (name) & drug.getPrice () != 0 & drug.getPrice () != null) {
-             drugRepository.updatePrice (name,drug.getPrice ());
+        if(drugRepository.existsByName(name) & drug.getPrice() != 0 & drug.getPrice() != null) {
+             drugRepository.updatePrice(name,drug.getPrice());
              return true;
         }
         return false;

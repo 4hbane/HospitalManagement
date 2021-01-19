@@ -35,7 +35,7 @@ public class Visit {
     private Bill bill;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "visit_id", cascade=CascadeType.ALL)
-    private List<DrugVisit> drugVisitSet = new ArrayList<>(0);
+    private List<DrugVisit> drugs = new ArrayList<>(0);
 
 
     public Visit(Long id, Long patientNumber, String reason, String doctorName) {

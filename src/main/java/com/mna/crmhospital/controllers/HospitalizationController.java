@@ -54,7 +54,7 @@ public class HospitalizationController {
         return null;
     }
 
-    //Add Bed to Hospitalisation (or modify)
+    // Add Bed to Hospitalisation (or modify)
     @PutMapping("/ajoutLit/{id}")
     public Hospitalization addBed(@RequestBody Bed bed, @PathVariable Long id){
         Optional<Hospitalization> hospitalizationOptional = hospitalizationRepository.findById(id);

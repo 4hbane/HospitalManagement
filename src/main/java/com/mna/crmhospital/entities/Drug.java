@@ -24,6 +24,6 @@ public class Drug {
     private Double price;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "drug_id", cascade=CascadeType.ALL)
-    private List<DrugVisit> drugVisitSet = new ArrayList<>(0);
+    private List<DrugVisit> visits = new ArrayList<>(0);
 
 }
