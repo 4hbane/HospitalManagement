@@ -83,20 +83,9 @@ public class CRMHospitalApplication {
 
 
             // Drugs
-            Drug Dolipran = drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,23.58, null));
-            Drug Supradyn = drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26, null));
-            Drug Aspegic = drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,48.00, null));
-
-            List<Drug> drugsList = new ArrayList<>();
-            drugsList.add(Dolipran);
-            drugsList.add(Supradyn);
-
-            drugVisitRepository.save(new DrugVisit(null, Dolipran.getId(), h.getId(), 10));
-
-
-
-            Inventory di = inventoryRepository.save(new Inventory(null, drugsList, null));
-            System.out.println(di.getDrugs());
+            Drug Dolipran = drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,23.58, null, null));
+            Drug Supradyn = drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26, null, null));
+            Drug Aspegic = drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,48.00, null, null));
 
 
             // Users and Roles

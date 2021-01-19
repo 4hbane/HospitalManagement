@@ -17,15 +17,13 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name="drugs_inventory",
-            joinColumns=@JoinColumn(name="inventory_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="drug_id", referencedColumnName="id"))
-    private List<Drug> drugs;
+    @ManyToOne
+    @JoinColumn(name="drug_fk")
+    private Drug drug;
 
     @Temporal( TemporalType.DATE )
     private Date expirationDate;
 
     //TODO(): Maybe add quantity ?
+
 }

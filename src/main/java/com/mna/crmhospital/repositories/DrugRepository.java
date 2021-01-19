@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface DrugRepository extends JpaRepository<Drug, Long> {
 
+    Drug findDrugByName(String name);
+
     List<Drug> findDrugsByType(DrugType type);
     Boolean existsByName( String name);
 

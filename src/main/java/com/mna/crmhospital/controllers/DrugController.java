@@ -6,6 +6,7 @@ import com.mna.crmhospital.repositories.DrugRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,8 @@ public class DrugController {
     @PostMapping("/medicaments")
     public Drug saveDrug(@RequestBody Drug drug) {
         drug.setId(null);
-        drug.setVisits(null);
+        drug.setVisits(new ArrayList<>());
+        drug.setInventories(new ArrayList<>());
         return drugRepository.save(drug);
     }
 
@@ -53,7 +55,7 @@ public class DrugController {
     @PutMapping("/medicaments/prix/{name}")
     public Boolean updateDrug(@RequestBody Drug drug, @PathVariable String name) {
         if(drugRepository.existsByName(name) & drug.getPrice() != 0 & drug.getPrice() != null) {
-             drugRepository.updatePrice(name,drug.getPrice());
+             drugRepository.updatePrice(name, drug.getPrice());
              return true;
         }
         return false;
