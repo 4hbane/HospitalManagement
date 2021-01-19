@@ -8,8 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
@@ -31,13 +30,13 @@ public class Visit {
 
     private String doctorName;
 
-    @Lob
-    private List<VDrug> drugs;
-
-
     @OneToOne(mappedBy = "visit",fetch = FetchType.LAZY)
     @JsonBackReference
     private Bill bill;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "visit_id", cascade=CascadeType.ALL)
+    private List<DrugVisit> drugVisitSet = new ArrayList<>(0);
+
 
     public Visit(Long id, Long patientNumber, String reason, String doctorName) {
         this.id = id;

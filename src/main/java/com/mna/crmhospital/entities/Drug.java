@@ -8,8 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
@@ -23,4 +22,8 @@ public class Drug {
     private DrugType type;
     @NotNull
     private Double price;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "drug_id", cascade=CascadeType.ALL)
+    private List<DrugVisit> drugVisitSet = new ArrayList<>(0);
+
 }

@@ -27,7 +27,7 @@ public class CRMHospitalApplication {
 
     @Bean
     CommandLineRunner start(PatientRepository patientRepository, MedicalFolderRepository medicalFolderRepository, HospitalizationRepository hospitalizationRepository, ConsultationRepository consultationRepository,
-                            StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository, DrungInventoryRepository drungInventoryRepository,
+                            StaffRepository staffRepository, BedRepository bedRepository, DrugRepository drugRepository, InventoryRepository inventoryRepository, DrugVisitRepository drugVisitRepository,
                             SRoleRepository sRoleRepository, SUserService sUserServiceImplementation) {
         return args -> {
 
@@ -83,23 +83,18 @@ public class CRMHospitalApplication {
 
 
             // Drugs
-            Drug Dolipran = drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,23.58));
-            Drug Supradyn = drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26));
-            Drug Aspegic = drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,48.00));
+            Drug Dolipran = drugRepository.save(new Drug(null, "Dolipran", DrugType.GENERIQUE,23.58, null));
+            Drug Supradyn = drugRepository.save(new Drug(null, "Supradyn", DrugType.GENERIQUE,5.26, null));
+            Drug Aspegic = drugRepository.save(new Drug(null, "Aspegic", DrugType.GENERIQUE,48.00, null));
 
             List<Drug> drugsList = new ArrayList<>();
             drugsList.add(Dolipran);
             drugsList.add(Supradyn);
 
-            List<VDrug> vDrugList = new ArrayList<>();
-            vDrugList.add(new VDrug(1L, 10));
-            vDrugList.add(new VDrug(3L, 10));
-            vDrugList.add(new VDrug(2L, 7));
+            drugVisitRepository.save(new DrugVisit(null, Dolipran.getId(), h.getId(), 10));
 
-            h.setDrugs(vDrugList);
-            System.out.println(h.getDrugs().get(0));
 
-            DrugInventory di = drungInventoryRepository.save(new DrugInventory(null, drugsList, null));
+            Inventory di = inventoryRepository.save(new Inventory(null, drugsList, null));
             System.out.println(di.getDrugs());
 
 
