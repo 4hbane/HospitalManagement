@@ -15,6 +15,7 @@ import java.util.List;
 @Data @NoArgsConstructor @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Visit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,12 +31,8 @@ public class Visit {
 
     private String doctorName;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name="drugs_visit",
-            joinColumns=@JoinColumn(name="visit_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="drug_id", referencedColumnName="id"))
-    private List<Drug> drugs;
+    @Lob
+    private List<VDrug> drugs;
 
 
     @OneToOne(mappedBy = "visit",fetch = FetchType.LAZY)

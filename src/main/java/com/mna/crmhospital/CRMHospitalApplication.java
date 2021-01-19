@@ -91,6 +91,14 @@ public class CRMHospitalApplication {
             drugsList.add(Dolipran);
             drugsList.add(Supradyn);
 
+            List<VDrug> vDrugList = new ArrayList<>();
+            vDrugList.add(new VDrug(1L, 10));
+            vDrugList.add(new VDrug(3L, 10));
+            vDrugList.add(new VDrug(2L, 7));
+
+            h.setDrugs(vDrugList);
+            System.out.println(h.getDrugs().get(0));
+
             DrugInventory di = drungInventoryRepository.save(new DrugInventory(null, drugsList, null));
             System.out.println(di.getDrugs());
 
