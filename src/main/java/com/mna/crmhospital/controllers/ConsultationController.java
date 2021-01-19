@@ -51,11 +51,9 @@ public class ConsultationController {
         return null;
     }
 
-
-    // TODO(): CUD for drugs in consultation.
     @PutMapping("/consultations/{id}/ajoutermed/{name}/{quantity}")
     public Consultation addDrugToConsultation(@PathVariable Long id, @PathVariable String name, @PathVariable int quantity) throws Exception {
-        Drug d = inventoryService.deleteInventoryEntires(name, 1).get(0).getDrug();
+        Drug d = inventoryService.deleteInventoryEntires(name, quantity).get(0).getDrug();
         Consultation c = null;
         if(consultationRepository.findById(id).isPresent()) {
             c = consultationRepository.findById(id).get();
@@ -64,5 +62,10 @@ public class ConsultationController {
         }
         return c;
     }
+
+    // TODO(): Delete drug from consultation.
+
+
+
     // TODO(): More controllers needed.
 }
