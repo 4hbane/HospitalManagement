@@ -4,6 +4,7 @@ import com.mna.crmhospital.entities.Drug;
 import com.mna.crmhospital.entities.Inventory;
 import com.mna.crmhospital.repositories.DrugRepository;
 import com.mna.crmhospital.repositories.InventoryRepository;
+import com.mna.crmhospital.services.InventoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,23 +22,7 @@ public class InventoryController {
     private final InventoryRepository inventoryRepository;
     private final DrugRepository drugRepository;
 
-    private Inventory deleteOneInventoryEntry(String name) {
-        Inventory inventory = null ;
-        List<Inventory> inventories = inventoryRepository.findAllByDrugName(name);
-        inventories.sort(Comparator.comparing(Inventory::getExpirationDate));
-        inventory = inventories.get(0);
-        inventoryRepository.delete(inventories.get(0));
-        return inventory;
-    }
-
-    private List<Inventory> deleteMutipleInventoryEntires(String name, int quantity) {
-        List<Inventory> returnInventories = new ArrayList<>() ;
-        List<Inventory> inventories = inventoryRepository.findAllByDrugName(name);
-        inventories.sort(Comparator.comparing(Inventory::getExpirationDate));
-        returnInventories = inventories.subList(0, quantity);
-        inventoryRepository.deleteInBatch(returnInventories);
-        return returnInventories;
-    }
+    private final InventoryService inventoryService;
 
     @GetMapping("/inventaire")
     public List<Inventory> getInventory() {
@@ -81,12 +66,12 @@ public class InventoryController {
     }
 
     @DeleteMapping("/inventaire/{name}")
-    public Inventory deleteInventoryEntry(@PathVariable String name) {
-        return deleteOneInventoryEntry(name);
+    public Inventory deleteInventoryEntry(@PathVariable String name) throws Exception {
+        return inventoryService.deleteInventoryEntires(name, 1).get(0);
     }
 
     @DeleteMapping("/inventaire/{name}/{quantity}")
-    public List<Inventory> deleteInventoryEntry(@PathVariable String name, @PathVariable int quantity) {
-        return deleteMutipleInventoryEntires(name, quantity);
+    public List<Inventory> deleteInventoryEntry(@PathVariable String name, @PathVariable int quantity) throws Exception {
+        return inventoryService.deleteInventoryEntires(name, quantity);
     }
 }

@@ -1,7 +1,12 @@
 package com.mna.crmhospital.controllers;
 
 import com.mna.crmhospital.entities.Consultation;
+import com.mna.crmhospital.entities.Drug;
+import com.mna.crmhospital.entities.DrugVisit;
 import com.mna.crmhospital.repositories.ConsultationRepository;
+import com.mna.crmhospital.repositories.DrugRepository;
+import com.mna.crmhospital.repositories.DrugVisitRepository;
+import com.mna.crmhospital.services.InventoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +19,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ConsultationController {
     private final ConsultationRepository consultationRepository;
+    private final DrugVisitRepository drugVisitRepository;
+    private final InventoryService inventoryService;
 
     @GetMapping("/consultations")
     public List<Consultation> getConsultations() {
@@ -46,5 +53,16 @@ public class ConsultationController {
 
 
     // TODO(): CUD for drugs in consultation.
+    @PutMapping("/consultations/{id}/ajoutermed/{name}/{quantity}")
+    public Consultation addDrugToConsultation(@PathVariable Long id, @PathVariable String name, @PathVariable int quantity) throws Exception {
+        Drug d = inventoryService.deleteInventoryEntires(name, 1).get(0).getDrug();
+        Consultation c = null;
+        if(consultationRepository.findById(id).isPresent()) {
+            c = consultationRepository.findById(id).get();
+            DrugVisit dv = new DrugVisit(null, d.getId(), c.getId(), quantity);
+            drugVisitRepository.save(dv);
+        }
+        return c;
+    }
     // TODO(): More controllers needed.
 }
