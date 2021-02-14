@@ -96,14 +96,14 @@ public class CRMHospitalApplication {
             sRoleRepository.save(new SRole(null, StaffFunction.RECEPTIONIST.toString ()));
             sRoleRepository.save(new SRole(null, StaffFunction.RH.toString ()));
 
-            sUserServiceImplementation.saveUser( "admin@app.com", "admin", StaffFunction.ADMIN.toString () );
-            sUserServiceImplementation.saveUser( "director@app.com", "director", StaffFunction.DIRECTOR.toString () );
+            sUserServiceImplementation.saveUser( "admin@app.com", bCryptPasswordEncoder.encode("mna"), StaffFunction.ADMIN.toString () );
+            sUserServiceImplementation.saveUser( "director@app.com",bCryptPasswordEncoder.encode("mna"), StaffFunction.DIRECTOR.toString () );
 
-            sUserServiceImplementation.saveUser( "doctor@app.com", "doctor", StaffFunction.DOCTOR.toString () );
-            sUserServiceImplementation.saveUser( "pharmacist@app.com", "pharmacist", StaffFunction.PHARMACIST.toString ());
+            sUserServiceImplementation.saveUser( "doctor@app.com", bCryptPasswordEncoder.encode("mna"), StaffFunction.DOCTOR.toString () );
+            sUserServiceImplementation.saveUser( "pharmacist@app.com", bCryptPasswordEncoder.encode("mna"), StaffFunction.PHARMACIST.toString ());
 
-            sUserServiceImplementation.saveUser ( "receptionist@app.com", "receptionist", StaffFunction.RECEPTIONIST.toString () );
-            sUserServiceImplementation.saveUser ( "rh@app.com", "rh", StaffFunction.RH.toString () );
+            sUserServiceImplementation.saveUser ( "receptionist@app.com", bCryptPasswordEncoder.encode("mna"), StaffFunction.RECEPTIONIST.toString () );
+            sUserServiceImplementation.saveUser ( "rh@app.com", bCryptPasswordEncoder.encode("mna"), StaffFunction.RH.toString () );
 
         };
     }
