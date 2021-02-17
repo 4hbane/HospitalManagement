@@ -24,6 +24,8 @@ public class Inventory {
     @Temporal( TemporalType.DATE )
     private Date expirationDate;
 
+
+
     //TODO(): Maybe add quantity ?
 
 }

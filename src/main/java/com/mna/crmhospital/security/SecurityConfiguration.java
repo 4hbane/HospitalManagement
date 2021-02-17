@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), sUserRepository));
         http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+
     }
 
 }

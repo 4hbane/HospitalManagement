@@ -32,10 +32,10 @@ public class CRMHospitalApplication {
         return args -> {
 
             // Patients
-            patientRepository.save(new Patient(1L,"Manal","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Celibataire","Ingenieur","0673290031","PL25617","CNOPS", 1L));
-            patientRepository.save(new Patient(2L,"Majdouline","Outaleb","Femme", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Celibataire","Ingenieur","0770359120","JK27106","CNOPS", 2L));
-            patientRepository.save(new Patient(3L,"Abdou","Ahbane","Homme", new Date(),"Avenue Hassan II, Aoulouz", 83052L,"Marie","Ingenieur","0654330112","LM93510","CNOPS",3L));
-            patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","Homme", new Date(),"Rue Caire, Sidi Ifni", 85200L,"Celibataire","Ingenieur","0623877719","JD50000","CNOPS",4L));
+            patientRepository.save(new Patient(1L,"Manal","Outaleb","FEMALE", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Celibataire","Ingenieur","0673290031","PL25617","CNOPS", 1L));
+            patientRepository.save(new Patient(2L,"Majdouline","Outaleb","FEMALE", new Date(),"Avenue Mohammed V, Ouarzazate", 45000L,"Celibataire","Ingenieur","0770359120","JK27106","CNOPS", 2L));
+            patientRepository.save(new Patient(3L,"Abdou","Ahbane","MALE", new Date(),"Avenue Hassan II, Aoulouz", 83052L,"Marie","Ingenieur","0654330112","LM93510","CNOPS",3L));
+            patientRepository.save(new Patient(4L,"Mounib","Elboujbaoui","MALE", new Date(),"Rue Caire, Sidi Ifni", 85200L,"Celibataire","Ingenieur","0623877719","JD50000","CNOPS",4L));
 
 
 
@@ -78,7 +78,7 @@ public class CRMHospitalApplication {
             staffRepository.save(new Staff(null, "director", "director", "director001", "director@app.com", "0605070101", "Sidi Ifni", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Administration", StaffFunction.DIRECTOR, new Date()));
             staffRepository.save(new Staff(null, "doctor", "doctor", "doctor001", "doctor@app.com", "06070445522", "Ouerzazate", new Date(), Gender.FEMALE, StaffStatus.ACTIVE, "Reanimation", StaffFunction.DOCTOR, new Date()));
             staffRepository.save(new Staff(null, "pharmacist", "pharmacist", "pharmacist001", "pharmacist@app.com", "0307080901", "Marrakesh", new Date(), Gender.FEMALE, StaffStatus.ACTIVE, "Pharmacie", StaffFunction.PHARMACIST, new Date()));
-            staffRepository.save(new Staff(null, "receptionist", "receptionist", "receptionist001", "receptionist@app.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Administration", StaffFunction.RECEPTIONIST, new Date()));
+            staffRepository.save(new Staff(null, "receptionist", "receptionist", "receptionist001", "receptionist@app.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Générale", StaffFunction.RECEPTIONIST, new Date()));
             staffRepository.save(new Staff(null, "rh", "rh", "rh001", "rh@app.com", "0333080901", "Mohammedia", new Date(), Gender.MALE, StaffStatus.ACTIVE, "Ressources Humaines", StaffFunction.RH, new Date()));
 
 

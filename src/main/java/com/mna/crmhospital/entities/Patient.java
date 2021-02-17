@@ -17,6 +17,7 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String gender;
+    @Temporal (TemporalType.DATE)
     private Date dateOfBirth;
     private String address;
     private Long postalCode;

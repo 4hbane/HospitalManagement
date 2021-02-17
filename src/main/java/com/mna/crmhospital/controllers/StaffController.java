@@ -74,6 +74,8 @@ public class StaffController {
     @PutMapping("/personnels/{id}")
     public Staff updateStaff(@RequestBody Staff staff, @PathVariable Long id) {
         if(staffRepository.existsById(id) && staff.getId().equals(id)) {
+            staff.setId ( id );
+            staff.setCreationDate ( staffRepository.findById ( id ).get ().getCreationDate () );
             return staffRepository.save(staff);
         }
         return null;

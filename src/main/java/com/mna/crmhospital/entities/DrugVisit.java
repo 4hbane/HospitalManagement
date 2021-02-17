@@ -1,6 +1,5 @@
 package com.mna.crmhospital.entities;
 
-import com.mna.crmhospital.repositories.VisitRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

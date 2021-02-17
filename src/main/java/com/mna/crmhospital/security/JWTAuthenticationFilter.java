@@ -61,6 +61,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + jwtToken);
             response.addHeader ( SecurityConstants.USERNAME_CONNECTED, user.getUsername ());
             response.addHeader ( SecurityConstants.USER_ROLE_CONNECTED,roles.get ( 0 ) );
+
         }
         else {
             response.setStatus(401);
