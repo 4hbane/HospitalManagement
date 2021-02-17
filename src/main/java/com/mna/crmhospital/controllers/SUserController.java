@@ -3,6 +3,7 @@ package com.mna.crmhospital.controllers;
 import com.mna.crmhospital.entities.SUser;
 import com.mna.crmhospital.repositories.SRoleRepository;
 import com.mna.crmhospital.repositories.SUserRepository;
+import com.mna.crmhospital.services.AccountService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,14 @@ class RBUser {
     private String password;
     private String role;
 }
+@AllArgsConstructor
+@Data
+class UpdateUser {
+    private String username;
+    private String password;
+    private String newPassword;
+    private String confirmPassword;
+}
 
 @RestController
 @CrossOrigin("*")
@@ -26,6 +35,7 @@ public class SUserController {
     // Get User
     private final SUserRepository sUserRepository;
     private final SRoleRepository sRoleRepository;
+    private final AccountService accountService;
 
     @GetMapping("/utilisateurs")
     public List<SUser> getUsers() { return sUserRepository.findAll(); }
@@ -49,20 +59,10 @@ public class SUserController {
         return sUserRepository.findSUserByUsername(user.getUsername());
     }
 
-    @PutMapping("/utilisateurs/")
-    public SUser updateUser(@RequestBody RBUser user) {
-        if(sUserRepository.existsByUsername(user.getUsername())) {
-            SUser oldUser = sUserRepository.findSUserByUsername(user.getUsername());
-            if(user.getPassword().equals("")){
-                user.setPassword(oldUser.getPassword());
-            }
-            //NOTE(): Changing role is it's own controller.
-            if(!user.getUsername().equals("")) oldUser.setUsername(user.getUsername());
-            if(!user.getPassword().equals("")) oldUser.setPassword(user.getPassword());
-            if(!user.getRole().equals("")) oldUser.setRole(sRoleRepository.findSRoleByName(user.getRole()));
-            sUserRepository.save(oldUser);
-        }
-        return null;
+    @PutMapping("/utilisateurs")
+    public Boolean updateUser(@RequestBody UpdateUser user) {
+        return accountService.updateUserPassword ( user.getUsername (), user.getPassword (),
+                user.getNewPassword (), user.getConfirmPassword ());
     }
 
     @PutMapping("/utilisateurs/deactiver/{id}")

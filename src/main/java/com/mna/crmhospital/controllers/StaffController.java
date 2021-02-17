@@ -8,6 +8,7 @@ import com.mna.crmhospital.services.SUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,7 @@ public class StaffController {
     @PostMapping("/personnels")
     public Staff saveStaff(@RequestBody Staff staff) {
         staff.setId(null); // Avoid update.
+        staff.setCreationDate ( new Date () );
         sUserServiceImplementation.saveUser( staff.getEmail(), staff.getCIN(), staff.getSfunction().toString () );
 
         return staffRepository.save(staff);

@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mna.crmhospital.entities.SUser;
 import com.mna.crmhospital.repositories.SUserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,6 +59,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     .sign(Algorithm.HMAC256 ( SecurityConstants.SECRET));
 
             response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + jwtToken);
+            response.addHeader ( SecurityConstants.USERNAME_CONNECTED, user.getUsername ());
+            response.addHeader ( SecurityConstants.USER_ROLE_CONNECTED,roles.get ( 0 ) );
         }
         else {
             response.setStatus(401);
